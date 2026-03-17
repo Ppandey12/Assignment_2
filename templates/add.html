@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <form action="/add" method="post">
+
+        <label>Priority</label>
+        <input type="number" name="priority" value="0"><br>
+
+        <label class="done_label">Done</label>
+        <input class="done_input" type="checkbox" name="option1" value="value1"><br>
+
+        <label>Created:</label>
+        <input type="date" name="created" value="{{ today }}" readonly><br>
+
+        <label>Due</label>
+        <input type="date" name="due"><br>
+
+        <label>Description</label>
+        <input type="text" name="description"><br>
+
+
+        <button type="submit">Add Item</button>
+    </form>
+
+</body>
+
+</html>
+
+
+
+<style>
+    form {
+        display: flex;
+        flex-direction: column;
+        width: 300px;
+        margin: 0 auto;
+    }
+
+    label {
+        margin-top: 10px;
+    }
+
+    input {
+        padding: 5px;
+        font-size: 16px;
+    }
+
+    button {
+        margin-top: 20px;
+        padding: 10px;
+        font-size: 16px;
+        background-color: #3e7b40;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #00ff0d;
+    }
+
+    .done_label {
+        display: inline-block;
+        margin-right: 10px;
+    }
+</style>

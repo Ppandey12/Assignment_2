@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <form action="/edit/{{ item.identifier }}" method="post">
+
+        <label>Priority</label>
+        <input type="number" name="priority" value="{{ item.priority }}"><br>
+
+        <label class="done_label">Done</label>
+        <input class="done_input" type="checkbox" name="option1" value="value1" {% if item.done %}checked{% endif
+            %}><br>
+
+        <label>Created</label>
+        <input type="date" name="created" value="{{ item.created }}" readonly><br>
+
+        <label>Due</label>
+        <input type="date" name="due" value="{{ item.due }}"><br>
+
+        <label>Comments</label>
+        <pre>{{ item.note }}</pre><br>
+
+
+        <label>Description</label>
+        <input type="text" name="description" value="{{ item.note }}"><br>
+
+        <button type="submit">Update Item</button>
+    </form>
+
+</body>
+
+</html>
+
+
+
+<style>
+    form {
+        display: flex;
+        flex-direction: column;
+        width: 300px;
+        margin: 0 auto;
+    }
+
+    label {
+        margin-top: 10px;
+    }
+
+    input {
+        padding: 5px;
+        font-size: 16px;
+    }
+
+    button {
+        margin-top: 20px;
+        padding: 10px;
+        font-size: 16px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+
+    .done_label {
+        display: inline-block;
+        margin-right: 10px;
+    }
+</style>
