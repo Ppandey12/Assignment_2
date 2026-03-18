@@ -27,19 +27,18 @@
             {% for item in todos %}
             {% if not item.done %}
 
-            <h4>created: {{ item.created }}</h4>
+            <h4>created: {{ item.created.strftime('%Y-%m-%d') }}</h4>
             <li class="todo-list_list">
                 {{ item.note }} - Priority: {{ item.priority }} - Due: {{ item.due }}
 
 
-         
-                <a href="{{ url_for('done', item_id=item.identifier) }}">
-                    <button class="done">Done</button>
+                <a href="{{ url_for('done', item_id=item.id) }}">
+                    <button>Done</button>
                 </a>
 
+                <a href="{{ url_for('edit', item_id=item.id) }}"><button>Edit</button></a>
 
 
-                <a class="edit-link" href="{{ url_for('edit', item_id=item.identifier) }}">Edit</a>
             </li>
             {% endif %}
             {% endfor %}
@@ -83,13 +82,13 @@
         margin-top: 20px;
     }
 
-    nav a {
+    button {
         margin-right: 10px;
         text-decoration: none;
         color: #333;
     }
 
-    nav a:hover {
+    button:hover {
         text-decoration: underline;
     }
 

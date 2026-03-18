@@ -9,27 +9,31 @@
 
 <body>
 
-    <form action="/edit/{{ item.identifier }}" method="post">
+    <form action="{{ url_for('edit', item_id=item.id) }}" method="post">
 
         <label>Priority</label>
         <input type="number" name="priority" value="{{ item.priority }}"><br>
 
-        <label class="done_label">Done</label>
+        <!-- <label class="done_label">Done</label>
         <input class="done_input" type="checkbox" name="option1" value="value1" {% if item.done %}checked{% endif
-            %}><br>
+            %}><br> -->
 
         <label>Created</label>
-        <input type="date" name="created" value="{{ item.created }}" readonly><br>
+        <input type="date" value="{{ item.created.strftime('%Y-%m-%d') }}" readonly><br>
 
         <label>Due</label>
         <input type="date" name="due" value="{{ item.due }}"><br>
 
         <label>Comments</label>
-        <pre>{{ item.note }}</pre><br>
-
+        <ul>
+            {% for comment in item.comments %}
+            <li>{{ comment.text }}</li>
+            {% endfor %}
+        </ul>
 
         <label>Description</label>
         <input type="text" name="description" value="{{ item.note }}"><br>
+  
 
         <button type="submit">Update Item</button>
     </form>
