@@ -25,11 +25,15 @@ class Comment(db.Model):
     text = db.Column(db.String(200))
 
 
-
 @app.route("/")
 def home():
     todos = Todo.query.all()
-    return render_template("home.html", todos=todos)
+    return render_template("home.html")
+
+@app.route("/list")
+def list():
+    todos = Todo.query.all()
+    return render_template("list.html", todos=todos)
 
 
 @app.route("/add", methods=['POST', 'GET'])
@@ -45,7 +49,7 @@ def add():
         )
         db.session.add(new_todo)
         db.session.commit()
-        return redirect(url_for('home'))
+        return redirect(url_for('list'))
     return render_template("add.html", today=today)
 
 
@@ -56,25 +60,23 @@ def done(item_id):
     if todo_item:
         todo_item.done = True
         db.session.commit()
-    return redirect(url_for("home"))
+    return redirect(url_for("list"))
 
 @app.route("/edit/<item_id>", methods=['POST', 'GET'])
 def edit(item_id):
     item = Todo.query.get_or_404(item_id)
-    # if item is None:
-    #     return redirect(url_for("home"))
 
     if request.method == 'POST':
+        old_note = item.note
+        new_note = request.form["description"].strip()
+        if old_note and old_note != new_note:
+            db.session.add(Comment(todo_id=item.id, text=old_note))
+
+
         item.priority = int(request.form["priority"])
         item.done = "option1" in request.form
         item.due = datetime.strptime(request.form["due"], '%Y-%m-%d').date()
-        item.note = request.form["description"]
-
-    
-        new_comment_txt= request.form.get("comment", "").strip()
-        if new_comment_txt:
-            commen_text = Comment(todo_id=item.id, text=new_comment_txt)
-            db.session.add(commen_text)
+        item.note = new_note
 
         db.session.commit()
         return redirect(url_for("home"))

@@ -13,19 +13,37 @@
         <h1>Todo Application</h1>
 
         <nav>
-            <button><a href="/">Home</a></button>
-            <button><a href="/list">List</a></button>
-            <button><a href="/add">Add Items</a></button>
-
+            <button class="nav_button"><a href="/">Home</a></button>
+            <button class="nav_button"><a href="/list">List</a></button>
+            <button class="nav_button"><a href="/add">Add Items</a></button>
+            <!-- <button><a href="/items">View Items</a></button> -->
 
         </nav>
 
     </div>
 
     <div class="content">
-        <h2>Welcome to the Todo Application!</h2>
-        <p>Use the navigation buttons above to view your todo list or add new items.</p>
+        <h2>Todo List</h2>
+
+        <ul class="todo-list">
+            {% for item in todos %}
+            {% if not item.done %}
+
+            <h4>created: {{ item.created.strftime('%Y-%m-%d') }}</h4>
+            <li class="todo-list_list">
+                {{ item.note }} - Priority: {{ item.priority }} - Due: {{ item.due }}
+
+
+                <a href="{{ url_for('done', item_id=item.id) }}"><button>Done</button></a>
+                <a href="{{ url_for('edit', item_id=item.id) }}"><button>Edit</button></a>
+
+
+            </li>
+            {% endif %}
+            {% endfor %}
+        </ul>
     </div>
+
 </body>
 
 </html>
@@ -63,7 +81,8 @@
         margin-top: 20px;
     }
 
-    button {
+
+    .nav_button {
         padding: 17px 40px;
         border-radius: 50px;
         cursor: pointer;
@@ -76,19 +95,58 @@
         transition: all 0.5s ease;
     }
 
-    button:hover {
+    .nav_button:hover {
         letter-spacing: 3px;
         background-color: hsl(261deg 80% 48%);
         color: hsl(0, 0%, 100%);
         box-shadow: rgb(93 24 220) 0px 7px 29px 0px;
     }
 
-    button:active {
+    .nav_button:active {
         letter-spacing: 3px;
         background-color: hsl(261deg 80% 48%);
         color: hsl(0, 0%, 100%);
         box-shadow: rgb(93 24 220) 0px 0px 0px 0px;
         transform: translateY(10px);
         transition: 100ms;
+    }
+
+    button {
+        margin-right: 10px;
+        text-decoration: none;
+        color: #333;
+    }
+
+    button:hover {
+        text-decoration: underline;
+    }
+
+    .edit-link {
+        margin-left: 10px;
+        text-decoration: none;
+        color: #007BFF;
+        border: 2px solid black;
+        padding: 2px 5px;
+        border-radius: 20px;
+
+    }
+
+    h4 {
+        margin: 0;
+        padding: 2px 0 2px 0;
+    }
+
+    .todo-list {
+        width: 50%;
+        height: 500px;
+        border: 2px solid black;
+        list-style-type: none;
+        padding: 0;
+
+    }
+
+    .todo-list_list {
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
     }
 </style>
